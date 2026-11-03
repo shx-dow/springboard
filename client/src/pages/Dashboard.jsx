@@ -8,6 +8,8 @@ import {
 } from "@phosphor-icons/react";
 
 import api from "../services/api";
+import { Link } from "react-router-dom";
+import ActivityFeed from "../components/ActivityFeed";
 function Dashboard() {
     const [stats, setStats] = useState({
         totalProjects: 0,
@@ -72,36 +74,26 @@ function Dashboard() {
 
     return (
         <div className="dashboard">
-            <div className="page-heading">
-                <div>
-                    <h1>Dashboard</h1>
-                    <p>Here's what's happening in your workspace.</p>
-                </div>
+            <div className="page-heading dashboard-heading">
+                <div><h1>Dashboard</h1><p>Your workspace at a glance.</p></div>
+                <Link className="dashboard-action" to="/projects">View projects <span>→</span></Link>
             </div>
-
             <div className="stats-grid">
-                {cards.map((card, index) => {
+                {cards.map((card) => {
                     const Icon = card.icon;
-
-                    return (
-                        <div className="stat-card" key={index}>
-                            <div className="stat-icon">
-                                <Icon size={22} />
-                            </div>
-
-                            <p>{card.title}</p>
-
-                            <h2>{card.value}</h2>
-                        </div>
-                    );
+                    return <div className="stat-card" key={card.title}><div className="stat-icon"><Icon size={18} /></div><p>{card.title}</p><h2>{card.value}</h2></div>;
                 })}
             </div>
-
-            <div className="welcome-card">
-                <div>
-                    <h2>Workspace overview</h2>
-                    <p>Track project work and keep issues moving.</p>
-                </div>
+            <div className="dashboard-lower">
+              <section className="dashboard-panel dashboard-activity">
+                <div className="section-caption"><span>Recent activity</span><Link to="/issues">Browse issues →</Link></div>
+                <ActivityFeed />
+              </section>
+              <section className="dashboard-side-note">
+                <span className="eyebrow">NEXT UP</span>
+                <p>{stats.totalProjects === 0 ? "Create your first project to start organizing work." : stats.openIssues > 0 ? `${stats.openIssues} open ${stats.openIssues === 1 ? "issue needs" : "issues need"} attention.` : "All clear. Add an issue when new work comes in."}</p>
+                <Link to={stats.totalProjects === 0 ? "/projects" : "/issues"}>{stats.totalProjects === 0 ? "Create a project" : "Review issues"}<span>↗</span></Link>
+              </section>
             </div>
         </div>
     );

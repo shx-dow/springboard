@@ -25,7 +25,6 @@ export const getRecentActivities = async (req, res) => {
 
         // Get recent activities
         const activities = await Activity.find({
-            userId: req.user.id,
             issueId: { $in: issueIds },
         })
             .populate("userId", "name")

@@ -93,9 +93,8 @@ function ProjectDetails() {
     if (!project) return <p>Loading project...</p>;
 
     return (
-        <div>
-            <h1>{project.name}</h1>
-            <p>{project.description}</p>
+        <div className="project-detail-page">
+            <div className="page-heading"><div><span className="eyebrow">PROJECT</span><h1>{project.name}</h1><p>{project.description}</p></div></div>
 
             {error && <p className="error">{error}</p>}
 

@@ -5,6 +5,7 @@ import api from "../services/api";
 function ActivityFeed({ projectId }) {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const fetchActivities = async () => {
@@ -14,7 +15,7 @@ function ActivityFeed({ projectId }) {
                 });
                 setActivities(res.data);
             } catch (error) {
-                setActivities([]);
+                setError(true);
             } finally {
                 setLoading(false);
             }
@@ -29,7 +30,8 @@ function ActivityFeed({ projectId }) {
         <div className="activity-section">
             <h2>Recent Activity</h2>
 
-            {activities.length === 0 && <p>No recent activity found.</p>}
+            {error && <p>Unable to load recent activity. Please refresh.</p>}
+            {!error && activities.length === 0 && <p>No recent activity yet.</p>}
 
             {activities.map((activity) => (
                 <div className="activity-item" key={activity._id}>

@@ -46,9 +46,8 @@ function Issues() {
     }, [search, status, priority, project]);
 
     return (
-        <div>
-            <h1>All Issues</h1>
-            <p>Search and manage your issues.</p>
+        <div className="issues-page">
+            <div className="page-heading"><div><h1>Issues</h1><p>Search and manage work across your projects.</p></div></div>
 
             <div className="filters">
                 <input
@@ -94,7 +93,7 @@ function Issues() {
             {loading ? (
                 <p>Loading issues...</p>
             ) : (
-                <div className="issues-list">
+                <div className="issues-list issue-table">
                     {issues.map((issue) => (
                         <div className="issue-card" key={issue._id}>
                             <div>
